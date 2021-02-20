@@ -1,1 +1,1 @@
-# decoderThumb
+# Decodificador Thumb
