@@ -15,8 +15,8 @@ int main(){
         instrucaoCompleta[i] = bitInstrucao;
         i++;
     }
-
-    cout << validarHexadecimal(instrucaoCompleta, i-1) << endl;
+    //cout << validarHexadecimal(instrucaoCompleta, i-1) << endl;
+    opcode(instrucaoCompleta);
 
     return 0;
 }
