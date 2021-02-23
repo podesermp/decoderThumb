@@ -24,7 +24,7 @@ bool validarHexadecimal(char *hex, int tam){
         (hex[cont] == 'd' || hex[cont] == 'D') || (hex[cont] == 'e' || hex[cont] == 'E') || (hex[cont] == 'f' || hex[cont] == 'F')){
             valido++;
         }else{
-            cout << "Hexadecimal inválido!" << endl;
+            cout << "Hexadecimal inválido!" << endl; 
             return false;
         }
         cont++;
