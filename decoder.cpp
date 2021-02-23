@@ -114,23 +114,42 @@ string converteHexBin(string hex){
             case 'a':
                 binario+=hexa;
                 break;
+            case 'A':
+                binario+=hexa;
+                break;
             case 'b':
+                binario+=hexb;
+                break;
+            case 'B':
                 binario+=hexb;
                 break;
             case 'c':
                 binario+=hexc;
                 break;
+            case 'C':
+                binario+=hexc;
+                break;
             case 'd':
+                binario+=hexd;
+                break;
+            case 'D':
                 binario+=hexd;
                 break;
             case 'e':
                 binario+=hexe;
                 break;
+            case 'E':
+                binario+=hexe;
+                break;
             case 'f':
                 binario+=hexf;
                 break;
+            case 'F':
+                binario+=hexf;
+                break;
             default:
-                cout << "Hexadecimal inválido!"<<endl;
+                cout << "ERRO: "<< hex << " inválido!"<<endl;
+                exit(1);
                 break;
         }
         i++;
@@ -166,8 +185,10 @@ void opcode(char *hex){
                                convertebindec(separabinario(binario, 5, 5), 5) << endl;
             }
     }
+    //ASR | ADD | SUB | ADD | SUB
     else if(hex[0]=='1'){
         if(binario[4]=='0'){
+            //ASR
             fout << hex << "    ASR r" << convertebindec(separabinario(binario, 13, 3), 3) <<
                            ", r" << convertebindec(separabinario(binario, 10, 3), 3) << ", #" <<
                            convertebindec(separabinario(binario, 5, 5), 5) << endl;
@@ -216,5 +237,61 @@ void opcode(char *hex){
             fout << hex << "    SUB r" << convertebindec(separabinario(binario, 5, 3), 3) <<
                                 ", #"<< convertebindec(separabinario(binario, 8, 8), 8) << endl;
         }
-    }   
+    }
+    else if(hex[0] == '4'){
+        //AND | EOR | LSL | LSR
+        if(hex[1] == '0'){
+            //AND
+            if(binario[8] == '0' && binario[9]=='0'){
+                    fout << hex << "    AND r" << convertebindec(separabinario(binario,13,3), 3) <<
+                    ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+            //EOR
+            else if(binario[8] == '0' && binario[9]=='1'){
+                    fout << hex << "    EOR r" << convertebindec(separabinario(binario,13,3), 3) <<
+                    ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+            //LSL
+            else if(binario[8] == '1' && binario[9]=='0'){
+                    fout << hex << "    LSL r" << convertebindec(separabinario(binario,13,3), 3) <<
+                    ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+            //LSR
+            else if(binario[8] == '1' && binario[9]=='1'){
+                    fout << hex << "    LSR r" << convertebindec(separabinario(binario,13,3), 3) <<
+                    ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+        }
+        //ASR | ADC | SBC | ROR
+        if(hex[1] == '1'){
+            //ASR
+            if(binario[8] == '0' && binario[9]=='0'){
+                    fout << hex << "    ASR r" << convertebindec(separabinario(binario,13,3), 3) <<
+                    ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+            //ADC
+            else if(binario[8] == '0' && binario[9]=='1'){
+                    fout << hex << "    ADC r" << convertebindec(separabinario(binario,13,3), 3) <<
+                    ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+            //SBC
+            else if(binario[8] == '1' && binario[9]=='0'){
+                    fout << hex << "    SBC r" << convertebindec(separabinario(binario,13,3), 3) <<
+                    ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+            //ROR
+            else if(binario[8] == '1' && binario[9]=='1'){
+                    fout << hex << "    ROR r" << convertebindec(separabinario(binario,13,3), 3) <<
+                    ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+        }
+        //TST | NEG | CMP | CMN
+        if(hex[1] == '2'){
+            //TST
+            if(binario[8] == '0' && binario[9]=='0'){
+                    fout << hex << "    TST r" << convertebindec(separabinario(binario,13,3), 3) <<
+                    ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+        }
+    }
 }
