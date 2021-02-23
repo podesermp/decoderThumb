@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstring>
-#include <math.h>
-#include <fstream>  // PARA AS FUNÇÕES DE ARQUIVO
+#include <math.h>   //PARA A FUNÇÃO QUE TRANSFORMA DE BINARIO PARA DECIMAL
+#include <fstream>  //PARA AS FUNÇÕES DE ARQUIVO
 #include "decoder.h"
 
 using namespace std;
@@ -138,7 +138,7 @@ string converteHexBin(string hex){
     return binario;
 }
 
-//COLOQUEI A FUNÇÃO PRA NÃO RETORNAR NADA MAS A IDEIA É NESSA FUNÇÃO GRAVAR A INSTRUÇÃO NO ARQUIVO
+//COLOQUEI A FUNÇÃO PRA NÃO RETORNAR, MAS A FUNÇÃO GRAVA A INSTRUÇÃO NO ARQUIVO
 //NESSA FUNÇÃO ANALISA-SE O OPCODE E DIZ QUAL A INSTRUÇÃO QUE FOI COLOCADA
 void opcode(char *hex){
     fstream fout;
@@ -149,10 +149,10 @@ void opcode(char *hex){
     }else{
         exit(1);
     }
-    //\O SWITCH VAI PEGAR OS 4 PRIMEIROS BITS, QUE É PARA SABER QUAL INSTRUÇÃO
-    //DENTRO DE CADA CASE DE CADA INSTRUÇÃO É QUE VAI ESPECIFICAR QUAL INSTRUÇÃO SERÁ USADA
-    //LSL
-    
+    //OS IFs Vão PEGAR OS 4 PRIMEIROS BITS, QUE É PARA SABER QUAL INSTRUÇÃO
+    //DENTRO DE CADA CONDIÇAO DE CADA INSTRUÇÃO É QUE VAI ESPECIFICAR QUAL INSTRUÇÃO SERÁ USADA
+    //*****************************************************************************************//
+    //LSL    
     if(hex[0]=='0'){
         if(binario[4]=='0'){
                 fout << hex << "    LSL r" << convertebindec(separabinario(binario, 13, 3), 3) <<

@@ -6,11 +6,11 @@
 using namespace std;
 
 int main(){
-    char instrucaoCompleta[16];
-    ifstream fin;
-    fin.open("decoderThumb.txt");
-    while (fin.getline(instrucaoCompleta,16)){
-        opcode(instrucaoCompleta);
+    char instrucaoCompleta[16];                //ARRAY QUE GUARDARA O HEXADECIMAL LIDO DO ARQUIVO
+    ifstream fin;                              //CRIA O ARQUIVO
+    fin.open("decoderThumb.txt");              //ABRE O ARQUIVO PARA LEITURA
+    while (fin.getline(instrucaoCompleta,16)){ //TIRA CADA LINHA DO ARQUIVO
+        opcode(instrucaoCompleta);             //MANDA A LINHA LIDA DO ARQUIVO PARA A FUNÇÃO OPCODE
     }
     return 0;
 }
