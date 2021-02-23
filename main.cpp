@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int main(){
+int main(){ 
     char instrucaoCompleta[16];
     ifstream fin;
     fin.open("decoderThumb.txt");
