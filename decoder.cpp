@@ -141,83 +141,80 @@ string converteHexBin(string hex){
 //COLOQUEI A FUNÇÃO PRA NÃO RETORNAR NADA MAS A IDEIA É NESSA FUNÇÃO GRAVAR A INSTRUÇÃO NO ARQUIVO
 //NESSA FUNÇÃO ANALISA-SE O OPCODE E DIZ QUAL A INSTRUÇÃO QUE FOI COLOCADA
 void opcode(char *hex){
-    ofstream fout("decoderThumb(saida).txt");
+    fstream fout;
+    fout.open("decoderThumb(saida).txt", ios::ate | ios::out | ios::in);
     string binario;
     if(validarHexadecimal(hex, 4)){
         binario = converteHexBin(hex);
     }else{
         exit(1);
     }
-    //O SWITCH VAI PEGAR OS 4 PRIMEIROS BITS, QUE É PARA SABER QUAL INSTRUÇÃO
+    //\O SWITCH VAI PEGAR OS 4 PRIMEIROS BITS, QUE É PARA SABER QUAL INSTRUÇÃO
     //DENTRO DE CADA CASE DE CADA INSTRUÇÃO É QUE VAI ESPECIFICAR QUAL INSTRUÇÃO SERÁ USADA
-    switch(hex[0]){
-        //LSL | LSR
-        case '0':
-            //LSL
-            if(binario[4]=='0'){
-                fout << "LSL r" << std::to_string(convertebindec(separabinario(binario, 13, 3), 3))<<
-                    ", r" << std::to_string(convertebindec(separabinario(binario, 10, 3), 3)) << ", #"<<
-                    std::to_string(convertebindec(separabinario(binario, 5, 5), 5)) << endl;
+    //LSL
+    
+    if(hex[0]=='0'){
+        if(binario[4]=='0'){
+                fout << hex << "    LSL r" << convertebindec(separabinario(binario, 13, 3), 3) <<
+                    ", r" << convertebindec(separabinario(binario, 10, 3), 3) << ", #" <<
+                    convertebindec(separabinario(binario, 5, 5), 5) << endl;
             }
             //LSR
             else{
-                fout << "LSR r" << std::to_string(convertebindec(separabinario(binario, 13, 3), 3))<<
-                    ", r"<<std::to_string(convertebindec(separabinario(binario, 10, 3), 3))<< ", #"<<
-                    std::to_string(convertebindec(separabinario(binario, 5, 5), 5))<< endl;
+                fout << hex << "    LSR r" << convertebindec(separabinario(binario, 13, 3), 3) <<
+                               ", r" << convertebindec(separabinario(binario, 10, 3), 3) << ", #"<<
+                               convertebindec(separabinario(binario, 5, 5), 5) << endl;
             }
-            break;
-        //ASR | ADD | SUB   
-        case '1':
-            if(binario[4]=='0'){
-                fout << "ASR r" + std::to_string(convertebindec(separabinario(binario, 13, 3), 3))+
-                    ", r"+std::to_string(convertebindec(separabinario(binario, 10, 3), 3))+ ", #"+
-                    std::to_string(convertebindec(separabinario(binario, 5, 5), 5))<<endl;
-            }
-            break;
-        case '2':
-            
-            break;
-        case '3':
-
-            break;
-        case '4':
-            
-            break;
-        case '5':
-            
-            break;
-        case '6':
-            
-            break;
-        case '7':
-            
-            break;
-        case '8':
-            
-            break;
-        case '9':
-            
-            break;
-        case 'a':
-            
-            break;
-        case 'b':
-            
-            break;
-        case 'c':
-            
-            break;
-        case 'd':
-            
-            break;
-        case 'e':
-            
-            break;
-        case 'f':
-            
-            break;
-        default:
-            fout << "ERRO\n";
-            break;
     }
+    else if(hex[0]=='1'){
+        if(binario[4]=='0'){
+            fout << hex << "    ASR r" << convertebindec(separabinario(binario, 13, 3), 3) <<
+                           ", r" << convertebindec(separabinario(binario, 10, 3), 3) << ", #" <<
+                           convertebindec(separabinario(binario, 5, 5), 5) << endl;
+        }else{
+            //ADD
+            if(binario[5]=='0' && binario[6]=='0'){
+                fout << hex << "    ADD r" << convertebindec(separabinario(binario, 13, 3), 3) <<
+                               ", r" << convertebindec(separabinario(binario, 10, 3), 3) << ", r"<<
+                               convertebindec(separabinario(binario, 7, 3), 3) << endl;
+            }//SUB
+            else if(binario[5]=='0' && binario[6]=='1'){
+                fout << hex << "    SUB r" << convertebindec(separabinario(binario, 13, 3), 3) <<
+                               ", r" << convertebindec(separabinario(binario, 10, 3), 3) << ", r"<<
+                               convertebindec(separabinario(binario, 7, 3), 3) << endl;
+            }//ADD
+            else if(binario[5]=='1' && binario[6]=='0'){
+                fout << hex << "    ADD r" << convertebindec(separabinario(binario, 13, 3), 3) <<
+                               ", r" << convertebindec(separabinario(binario, 10, 3), 3) << ", #"<<
+                               convertebindec(separabinario(binario, 7, 3), 3) << endl;
+            }//SUB
+            else if(binario[5]=='1' && binario[6]=='1'){
+                fout << hex << "    SUB r" << convertebindec(separabinario(binario, 13, 3), 3) <<
+                               ", r" << convertebindec(separabinario(binario, 10, 3), 3) << ", #"<<
+                               convertebindec(separabinario(binario, 7, 3), 3) << endl;
+            }
+        }
+    }//MOV | CMP
+    else if(hex[0]=='2'){
+        //MOV
+        if(binario[4]=='0'){
+            fout << hex << "    MOV r" << convertebindec(separabinario(binario, 5, 3), 3) <<
+                                ", #"<< convertebindec(separabinario(binario, 8, 8), 8) << endl;
+        }//CMP
+        else{
+            fout << hex << "    CMP r" << convertebindec(separabinario(binario, 5, 3), 3) <<
+                                ", #"<< convertebindec(separabinario(binario, 8, 8), 8) << endl;
+        }
+    }//ADD | SUB
+    else if(hex[0]=='3'){
+        //ADD
+        if(binario[4]=='0'){
+            fout << hex << "    ADD r" << convertebindec(separabinario(binario, 5, 3), 3) <<
+                                ", #"<< convertebindec(separabinario(binario, 8, 8), 8) << endl;
+        }//SUB
+        else{
+            fout << hex << "    SUB r" << convertebindec(separabinario(binario, 5, 3), 3) <<
+                                ", #"<< convertebindec(separabinario(binario, 8, 8), 8) << endl;
+        }
+    }   
 }
