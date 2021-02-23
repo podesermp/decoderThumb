@@ -2,7 +2,7 @@
 #include <cstring>
 #include <math.h>   //PARA A FUNÇÃO QUE TRANSFORMA DE BINARIO PARA DECIMAL
 #include <fstream>  //PARA AS FUNÇÕES DE ARQUIVO
-#include "decoder.h"
+#include "decoder.h" 
 
 using namespace std;
 
