@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cstring>
+#include <math.h>
+#include <fstream>  // PARA AS FUNÇÕES DE ARQUIVO
 #include "decoder.h"
 
 using namespace std;
@@ -35,6 +37,26 @@ bool validarHexadecimal(char *hex, int tam){
         return false;
     }
 }
+//RETORNA APENAS A PARTE DESEJADA DO BINARIO
+string separabinario(string binario, int pos, int tam){
+    string bin;
+    while(tam>0){
+        bin+=binario[pos];
+        tam--;
+        pos++;
+    }
+    return bin;
+}
+
+//CONVERTE UM BINARIO EM DECIMAL
+int convertebindec(string binario, int tam){
+    int decimal=0;
+    for(int i= 0; i<tam ;i++){
+        if(binario[i]=='1')decimal+= pow(2,(tam-1)-i);
+    }
+    return decimal;
+}
+
 
 string converteHexBin(string hex){
     string binario;
@@ -119,12 +141,83 @@ string converteHexBin(string hex){
 //COLOQUEI A FUNÇÃO PRA NÃO RETORNAR NADA MAS A IDEIA É NESSA FUNÇÃO GRAVAR A INSTRUÇÃO NO ARQUIVO
 //NESSA FUNÇÃO ANALISA-SE O OPCODE E DIZ QUAL A INSTRUÇÃO QUE FOI COLOCADA
 void opcode(char *hex){
+    ofstream fout("decoderThumb(saida).txt");
     string binario;
     if(validarHexadecimal(hex, 4)){
         binario = converteHexBin(hex);
     }else{
         exit(1);
     }
+    //O SWITCH VAI PEGAR OS 4 PRIMEIROS BITS, QUE É PARA SABER QUAL INSTRUÇÃO
+    //DENTRO DE CADA CASE DE CADA INSTRUÇÃO É QUE VAI ESPECIFICAR QUAL INSTRUÇÃO SERÁ USADA
+    switch(hex[0]){
+        //LSL | LSR
+        case '0':
+            //LSL
+            if(binario[4]=='0'){
+                fout << "LSL r" << std::to_string(convertebindec(separabinario(binario, 13, 3), 3))<<
+                    ", r" << std::to_string(convertebindec(separabinario(binario, 10, 3), 3)) << ", #"<<
+                    std::to_string(convertebindec(separabinario(binario, 5, 5), 5)) << endl;
+            }
+            //LSR
+            else{
+                fout << "LSR r" << std::to_string(convertebindec(separabinario(binario, 13, 3), 3))<<
+                    ", r"<<std::to_string(convertebindec(separabinario(binario, 10, 3), 3))<< ", #"<<
+                    std::to_string(convertebindec(separabinario(binario, 5, 5), 5))<< endl;
+            }
+            break;
+        //ASR | ADD | SUB   
+        case '1':
+            if(binario[4]=='0'){
+                fout << "ASR r" + std::to_string(convertebindec(separabinario(binario, 13, 3), 3))+
+                    ", r"+std::to_string(convertebindec(separabinario(binario, 10, 3), 3))+ ", #"+
+                    std::to_string(convertebindec(separabinario(binario, 5, 5), 5))<<endl;
+            }
+            break;
+        case '2':
+            
+            break;
+        case '3':
 
-    cout <<"Hex em binario(16 bits): "<<binario<<endl;
+            break;
+        case '4':
+            
+            break;
+        case '5':
+            
+            break;
+        case '6':
+            
+            break;
+        case '7':
+            
+            break;
+        case '8':
+            
+            break;
+        case '9':
+            
+            break;
+        case 'a':
+            
+            break;
+        case 'b':
+            
+            break;
+        case 'c':
+            
+            break;
+        case 'd':
+            
+            break;
+        case 'e':
+            
+            break;
+        case 'f':
+            
+            break;
+        default:
+            fout << "ERRO\n";
+            break;
+    }
 }
