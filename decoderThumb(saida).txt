@@ -1,5 +1,1 @@
-2003    MOV r0, #3
-2105    MOV r1, #5
-1840    ADD r0, r0, r1
-1a40    SUB r0, r0, r1
-1a40    SUB r0, r0, r1
+43ed    MVN r5, r5

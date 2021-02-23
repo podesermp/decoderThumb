@@ -263,7 +263,7 @@ void opcode(char *hex){
             }
         }
         //ASR | ADC | SBC | ROR
-        if(hex[1] == '1'){
+        else if(hex[1] == '1'){
             //ASR
             if(binario[8] == '0' && binario[9]=='0'){
                     fout << hex << "    ASR r" << convertebindec(separabinario(binario,13,3), 3) <<
@@ -286,11 +286,49 @@ void opcode(char *hex){
             }
         }
         //TST | NEG | CMP | CMN
-        if(hex[1] == '2'){
+        else if(hex[1] == '2'){
             //TST
             if(binario[8] == '0' && binario[9]=='0'){
                     fout << hex << "    TST r" << convertebindec(separabinario(binario,13,3), 3) <<
                     ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+            //NEG
+            else if(binario[8] == '0' && binario[9]=='1'){
+                    fout << hex << "    NEG r" << convertebindec(separabinario(binario,13,3), 3) <<
+                    ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+            //CMP
+            else if(binario[8] == '1' && binario[9]=='0'){
+                    fout << hex << "    CMP r" << convertebindec(separabinario(binario,13,3), 3) <<
+                    ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+            //CMN
+            else if(binario[8] == '1' && binario[9]=='1'){
+                    fout << hex << "    CMN r" << convertebindec(separabinario(binario,13,3), 3) <<
+                    ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+        }
+        //ORR | MUL | BIC | MVN
+        else if(hex[1] == '3'){
+            //ORR
+            if(binario[8] == '0' && binario[9]=='0'){
+                fout << hex << "    ORR r" << convertebindec(separabinario(binario,13,3), 3) <<
+                ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+            //MUL
+            else if(binario[8] == '0' && binario[9]=='1'){
+                fout << hex << "    MUL r" << convertebindec(separabinario(binario,13,3), 3) <<
+                ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+            //BIC
+            else if(binario[8] == '1' && binario[9]=='0'){
+                fout << hex << "    BIC r" << convertebindec(separabinario(binario,13,3), 3) <<
+                ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
+            }
+            //MVN
+            else if(binario[8] == '1' && binario[9]=='1'){
+                fout << hex << "    MVN r" << convertebindec(separabinario(binario,13,3), 3) <<
+                ", r" << convertebindec(separabinario(binario,10,3), 3)<<endl;
             }
         }
     }
