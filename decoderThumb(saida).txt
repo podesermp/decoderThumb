@@ -1,1 +1,15 @@
+2003    MOV r0, #3
+2105    MOV r1, #5
+1840    ADD r0, r0, r1
+1a40    SUB r0, r0, r1
+1a40    SUB r0, r0, r1
+1a9b    SUB r3, r3, r2
 43ed    MVN r5, r5
+43c7    MVN r7, r0
+432d    ORR r5, r5
+42ab    CMP r3, r5
+4008    AND r0, r1
+0052    LSL r2, r2, #1
+4800    LDR r0, [pc, #0]
+6038    STR r0, [r7, #0]
+6070    STR r0, [r6, #1]
