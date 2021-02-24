@@ -57,6 +57,73 @@ int convertebindec(string binario, int tam){
     return decimal;
 }
 
+string decodeCond(char hex){
+    switch(hex){
+        case '0':
+            return "EQ";
+            break;
+        case '1':
+            return "NE";
+            break;
+        case '2':
+            return "CS_HS";
+            break;
+        case '3':
+            return "CC_LO";
+            break;
+        case '4':
+            return "MI";
+            break;
+        case '5':
+            return "PL";
+            break;
+        case '6':
+            return "VS";
+            break;
+        case '7':
+            return "VC";
+            break;
+        case '8':
+            return "HI";
+            break;
+        case '9':
+            return "LS";
+            break;
+        case 'a':
+            return "GE";
+            break;
+        case 'A':
+            return "GE";
+            break;
+        case 'b':
+            return "LT";
+            break;
+        case 'B':
+            return "LT";
+            break;
+        case 'c':
+            return "GT";
+            break;
+        case 'C':
+            return "GT";
+            break;
+        case 'd':
+            return "LE";
+            break;
+        case 'D':
+            return "LE";
+            break;
+        case 'e':
+            return "{AL}";
+            break;
+        case 'E':
+            return "{AL}";
+            break;
+        default:
+            return "ERRO";
+            break;
+    }
+}
 
 string converteHexBin(string hex){
     string binario;
@@ -496,7 +563,7 @@ void opcode(char *hex){
         }
     }
     //STR | LDR Ld, [sp, #immed*4]
-    else if(hex[0]=='8'){
+    else if(hex[0]=='9'){
         //STR Ld, [sp, #immed*4]
         if(binario[4]=='0'){
             fout << hex << "    STR r" << convertebindec(separabinario(binario,5,3), 3)<<
@@ -505,6 +572,161 @@ void opcode(char *hex){
         else{
             fout << hex << "    LDR r" << convertebindec(separabinario(binario,5,3), 3)<<
             ", [sp, #" << convertebindec(separabinario(binario,8,8), 8) << "]" <<endl;
+        }
+    }
+    //ADD Ld, pc, #immed*4 | ADD Ld, sp, #immed*4
+    else if(hex[0]=='a' || hex[0]=='A'){
+        //ADD Ld, pc, #immed*4
+        if(binario[4]=='0'){
+            fout << hex << "    ADD r" << convertebindec(separabinario(binario,5,3), 3)<<
+            ", pc, #" << convertebindec(separabinario(binario,8,8), 8) << endl;
+        }//ADD Ld, sp, #immed*4
+        else{
+            fout << hex << "    ADD r" << convertebindec(separabinario(binario,5,3), 3)<<
+            ", sp, #" << convertebindec(separabinario(binario,8,8), 8) << endl;
+        }
+    }
+    else if(hex[0]=='b' || hex[0]=='B'){
+        //ADD sp, #immed*4 | SUB sp, #immed*4
+        if(hex[1]=='0'){
+            //ADD sp, #immed*4
+            if(binario[8]=='0'){
+                fout << hex << "    ADD sp, #" << convertebindec(separabinario(binario,9,7), 7) << endl;
+            }//SUB sp, #immed*4
+            else{
+                fout << hex << "    SUB sp, #" << convertebindec(separabinario(binario,9,7), 7) << endl;
+            }
+        }
+        //SXTH | SXTB | UXTH | UXTB
+        else if(hex[1]=='2'){
+            //SXTH
+            if(binario[8]=='0' && binario[9]=='0'){
+                fout << hex << "    SXTH r" << convertebindec(separabinario(binario,13,3), 3)<<
+                                ", r" << convertebindec(separabinario(binario,10,3), 3) << ", r" <<
+                                convertebindec(separabinario(binario,7,3), 3) << endl;
+            }
+            //SXTB
+            else if(binario[8]=='0' && binario[9]=='1'){
+                fout << hex << "    SXTB r" << convertebindec(separabinario(binario,13,3), 3)<<
+                                ", r" << convertebindec(separabinario(binario,10,3), 3) << endl;
+            }
+            //UXTH
+            else if(binario[8]=='1' && binario[9]=='0'){
+                fout << hex << "    UXTH r" << convertebindec(separabinario(binario,13,3), 3)<<
+                                ", r" << convertebindec(separabinario(binario,10,3), 3) << endl;
+            }
+            //UXTB
+            else if(binario[8]=='1' && binario[9]=='1'){
+                fout << hex << "    UXTB r" << convertebindec(separabinario(binario,13,3), 3)<<
+                                ", r" << convertebindec(separabinario(binario,10,3), 3) << endl;
+            }
+        }
+        //REV | REV16 | | REVSH
+        else if(hex[1]=='A' || hex[1]=='a'){
+            //REV
+            if(binario[8]=='0' && binario[9]=='0'){
+                fout << hex << "    REV r" << convertebindec(separabinario(binario,13,3), 3)<<
+                                ", r" << convertebindec(separabinario(binario,10,3), 3) <<
+                                convertebindec(separabinario(binario,7,3), 3) << endl;
+            }
+            //REV16
+            else if(binario[8]=='0' && binario[9]=='1'){
+                fout << hex << "    REV16 r" << convertebindec(separabinario(binario,13,3), 3)<<
+                                ", r" << convertebindec(separabinario(binario,10,3), 3) << endl;
+            }
+            //REVSH
+            else if(binario[8]=='1' && binario[9]=='1'){
+                fout << hex << "    REVSH r" << convertebindec(separabinario(binario,13,3), 3)<<
+                                ", r" << convertebindec(separabinario(binario,10,3), 3) << endl;
+            }
+            
+        }
+        //PUSH | POP
+        else if(binario[5]=='1' && binario[6]=='0'){
+            //PUSH
+            if(binario[4]=='0'){
+                fout << hex << "    PUSH {r" << convertebindec(separabinario(binario,12,4), 4)<<
+                                ", r" << convertebindec(separabinario(binario,8,4), 4) << "}"<< endl;
+            }//POP
+            else{
+                fout << hex << "    POP {r" << convertebindec(separabinario(binario,12,4), 4)<<
+                                ", r" << convertebindec(separabinario(binario,8,4), 4) << "}" << endl;
+            }
+        }
+        //SETEND LE | SETEND BE
+        else if(hex[1]=='6' && (hex[2]=='A' || hex[2]=='a')){
+            //SETEND LE
+            if(hex[3]=='0'){
+                fout << hex << "    SETEND LE "<< endl;
+            }//SETEND BE
+            else if(hex[3]=='8'){
+                fout << hex << "    SETEND BE " << endl;
+            }
+        }
+        //CPSIE | CPSID
+        else if(hex[1]=='6'){
+            //CPSIE
+            if(hex[2]=='6'){
+                fout << hex << "    CPSIE "<< endl;
+            }//CPSID
+            else if(hex[2]=='7'){
+                fout << hex << "    CPSID " << endl;
+            }
+        }
+        //BKPT immed8
+        else if(hex[1]=='E' || hex[1]=='e'){
+            fout << hex << "    BKPT #" << convertebindec(separabinario(binario,8,8),8) << endl;
+        }
+    }
+    //STMIA | LDMIA Ln!, {register-list}
+    else if(hex[0]=='C' || hex[0]=='c'){
+        //STMIA
+        if(binario[4]=='0'){
+            fout << hex << "    STMIA r" << convertebindec(separabinario(binario,5,3), 3)<<
+                                "!, {r" << convertebindec(separabinario(binario,12,4), 4)<<
+                                ", r"<<convertebindec(separabinario(binario,8,4), 4) << "}"<< endl;
+        }//LDMIA
+        else{
+            fout << hex << "    LDMIA r" << convertebindec(separabinario(binario,5,3), 3)<<
+                                "!, {r" << convertebindec(separabinario(binario,12,4), 4)<<
+                                ", r"<<convertebindec(separabinario(binario,8,4), 4) << "}"<< endl;
+        }
+    }
+    //FALTA A PRIMEIRA CONDIÇAO
+    else if(hex[0]=='D' || hex[0]=='d'){
+        //B<cond> instruction_address+4+offset*2
+        if(decodeCond(hex[1])!="ERRO"){
+            fout << hex << "    B" << decodeCond(hex[1])<<", #" << ", r" <<
+                            convertebindec(separabinario(binario,8,4), 4) << "}"<< endl;
+        }//Undefined and expected to remain so
+        else if(hex[1]=='E' || hex[1]=='e'){
+            fout << hex << "    Undefined and expected to remain so" << endl;
+        }//SWI immed8
+        else if(hex[1]=='F' || hex[1]=='f'){
+            fout << hex << "    SWI " << convertebindec(separabinario(binario,8,8), 8) << endl;
+        }
+    }//FALTA
+    else if(hex[0]=='E' || hex[1]=='0'){
+        //B instruction_address+4+offset*2
+        if(binario[4]=='0'){
+            fout << hex << "    B" << decodeCond(hex[1])<<", #" <<
+                            convertebindec(separabinario(binario,8,4), 4)<< endl;
+        }//BLX ((instruction+4+(poff<<12)+offset*4) &~ 3)
+        else if(binario[4]=='1'){
+            fout << hex << "    BLX " << decodeCond(hex[1])<<", #" <<
+                            convertebindec(separabinario(binario,8,4), 4) << endl;
+        }
+    }
+    //FALTA
+    else if(hex[0]=='F' || hex[0]=='f'){
+        //BL or BLX
+        if(binario[4]=='0'){
+            fout << hex << "    B" << decodeCond(hex[1])<<", #" <<
+                            convertebindec(separabinario(binario,8,4), 4)<< endl;
+        }//BL instruction+4+ (poff<<12)+offset*2
+        else if(binario[4]=='1'){
+            fout << hex << "    BL " << decodeCond(hex[1])<<", #" <<
+                            convertebindec(separabinario(binario,8,4), 4) << endl;
         }
     }
 }
