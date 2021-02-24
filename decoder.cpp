@@ -228,7 +228,7 @@ string converteHexBin(string hex){
 //NESSA FUNÇÃO ANALISA-SE O OPCODE E DIZ QUAL A INSTRUÇÃO QUE FOI COLOCADA
 void opcode(char *hex){
     fstream fout;
-    fout.open("decoderThumb(saida).txt", ios::ate | ios::out | ios::in);
+    fout.open("decoderThumb.out", ios::ate | ios::out | ios::in);
     string binario;
     if(validarHexadecimal(hex, 4)){
         binario = converteHexBin(hex);
