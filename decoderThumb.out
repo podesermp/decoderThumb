@@ -1,15 +1,26 @@
+e7ff    B #4098
 2003    MOV r0, #3
 2105    MOV r1, #5
 1840    ADD r0, r0, r1
 1a40    SUB r0, r0, r1
 1a40    SUB r0, r0, r1
-1a9b    SUB r3, r3, r2
-43ed    MVN r5, r5
+b406    PUSH {r0, r6}
+e7fe    B #4096
+bc03    POP {r0, r3}
+be00    BKPT #0
+df32    SWI #50
 43c7    MVN r7, r0
 432d    ORR r5, r5
+438a    BIC r2, r1
+6038    STR r0, [r7, #0]
+6070    STR r0, [r6, #4]
+4800    LDR r0, [pc, #0]
+e7fe    B #4096
+1a9b    SUB r3, r3, r2
 42ab    CMP r3, r5
 4008    AND r0, r1
+4232    TST r2, r6
 0052    LSL r2, r2, #1
-4800    LDR r0, [pc, #0]
-6038    STR r0, [r7, #0]
-6070    STR r0, [r6, #1]
+d1e8    BNE #468
+f7ff    BL #4098
+fff0    BL #4068
