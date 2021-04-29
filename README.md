@@ -11,6 +11,16 @@
 ### Tecnologias
 - [C++](https://devdocs.io/cpp/)
 
+### Executar o projeto
+* Baixe o clone desse diretório
+* No arquivo .in coloque o mapa de meória que será decodificado
+* Pelo terminal, vá até onde está a pasta baixada(clonada) desse diretório
+* Execute o comando abaixo:
+```bash
+    g++ main.cpp decoder.cpp
+```
+Logo após isso, no arquivo .out estará as instruições Thumb do respectivo mapa de memória .in.
+
 ### Status do projeto
 <h4 align="center"> 
 	Finalizado - Projeto desenvolvido para a disciplina de Arquitetura e organização de computadores.
