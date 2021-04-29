@@ -1,8 +1,10 @@
 # Decodificador Thumb
 
 <p align="center">
- <a href="#objetivo">Objetivo</a> •
- <a href="#tecnologias">Tecnologias</a>
+<a href="#objetivo">Objetivo</a> •
+<a href="#tecnologias">Tecnologias</a> • 
+<a href="#executar-o-projeto">Executar projeto</a> • 
+<a href="#status-do-projeto">Status do projeto</a>
 </p>
 
 ### Objetivo
