@@ -19,6 +19,10 @@
 ```bash
     g++ main.cpp decoder.cpp
 ```
+* Logo após isso, um arquivo a.out deve ter sido criado. Execute:
+```bash
+    ./a.out
+```
 Logo após isso, no arquivo .out estará as instruições Thumb do respectivo mapa de memória .in.
 
 ### Status do projeto
