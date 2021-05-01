@@ -15,7 +15,7 @@
 
 ### Executar o projeto
 * Baixe o clone desse diretório
-* No arquivo .in coloque o mapa de meória que será decodificado
+* No arquivo .in coloque o mapa de memória que será decodificado
 * Pelo terminal, vá até onde está a pasta baixada(clonada) desse diretório
 * Execute o comando abaixo:
 ```bash
@@ -29,5 +29,5 @@ Logo após isso, no arquivo .out estará as instruições Thumb do respectivo ma
 
 ### Status do projeto
 <h4 align="center"> 
-	Finalizado - Projeto desenvolvido para a disciplina de Arquitetura e organização de computadores.
+	Finalizado - Projeto desenvolvido para a disciplina de Arquitetura e organização de computadores II.
 </h4>
